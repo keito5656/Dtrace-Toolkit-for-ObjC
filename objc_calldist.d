@@ -7,14 +7,14 @@ dtrace:::BEGIN
 	printf("Tracing... Hit Ctrl-C to end.\n");
 }
 
-objc$target:::entry
+objc$1:$2:$3:entry
 {
 	self->depth++;
 	self->exclude[self->depth] = 0;
 	self->sub[self->depth] = timestamp;
 }
 
-objc$target:::return
+objc$1:$2:$3:return
 /self->sub[self->depth]/
 {
 	this->elapsed_incl = timestamp - self->sub[self->depth];
